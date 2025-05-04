@@ -1,25 +1,27 @@
+import React from "react";
 import { render, screen } from "@testing-library/react";
-import { expect, test } from "@jest/globals";
 import Login from "./Login";
 
-test("Should render 2 input elements", () => {
+describe("Login component", () => {
+  test("renders two input elements", () => {
     render(<Login />);
-    const emailInput = screen.getByRole("textbox");
-    const passwordInput = screen.getByLabelText(/Password/i);
+    const emailInput = screen.getByLabelText(/email/i);
+    const passwordInput = screen.getByLabelText(/password/i);
     expect(emailInput).toBeInTheDocument();
     expect(passwordInput).toBeInTheDocument();
-});
+  });
 
-test("Should render 2 label elements with the text 'Email' and 'Password'", () => {
+  test("renders two label elements with text Email and Password", () => {
     render(<Login />);
-    const labelEmail = screen.getByText(/email/i);
-    const labelPassword = screen.getByText(/password/i);
-    expect(labelEmail).toBeInTheDocument();
-    expect(labelPassword).toBeInTheDocument();
-});
+    const emailLabel = screen.getByLabelText(/email/i);
+    const passwordLabel = screen.getByLabelText(/password/i);
+    expect(emailLabel).toBeInTheDocument();
+    expect(passwordLabel).toBeInTheDocument();
+  });
 
-test("Should render a button with the text 'OK'", () => {
+  test("renders a button with the text OK", () => {
     render(<Login />);
     const button = screen.getByRole("button", { name: /ok/i });
     expect(button).toBeInTheDocument();
+  });
 });

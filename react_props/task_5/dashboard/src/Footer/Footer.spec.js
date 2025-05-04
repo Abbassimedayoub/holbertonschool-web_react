@@ -1,11 +1,14 @@
+import React from "react";
 import { render, screen } from "@testing-library/react";
-import { expect, test } from "@jest/globals";
 import Footer from "./Footer";
-import { getCurrentYear, getFooterCopy } from "../utils/utils";
+import { getFooterCopy } from "../utils/utils";
 
-test("Should render footer with correct copyright text", () => {
+describe("Footer component", () => {
+  test("renders correct copyright text", () => {
     render(<Footer />);
-    const expectedFooterText = `Copyright ${getCurrentYear()} - ${getFooterCopy(true)}`;
-    const footerText = screen.getByText(expectedFooterText);
-    expect(footerText).toHaveTextContent(/Copyright 2024 - Holberton School/i);
+    const year = new Date().getFullYear();
+    const expectedText = `Copyright ${year} - Holberton School`;
+    const footerText = screen.getByText(expectedText);
+    expect(footerText).toBeInTheDocument();
+  });
 });

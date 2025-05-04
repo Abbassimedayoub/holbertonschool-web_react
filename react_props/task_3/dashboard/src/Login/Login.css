@@ -1,7 +1,12 @@
-.App-login {
-    margin: 20px;
+.App-body {
+  text-align: center;
 }
 
-.App-login input {
-    margin: 0px 10px 0px 10px;
+input {
+  margin: 5px;
+  padding: 10px;
+}
+
+button {
+  padding: 10px;
 }

@@ -1,31 +1,40 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import { expect, test, describe, jest } from '@jest/globals';
-import Notifications from '../Notifications/Notifications.jsx';
+import React from "react";
+import { render, screen, fireEvent } from "@testing-library/react";
+import Notifications from "./Notifications";
 
-describe('Notifications Component', () => {
-  test('renders the notifications title', () => {
+describe("Notifications component", () => {
+  // 1. اختبار وجود العنوان "Here is the list of notifications"
+  test("should display the notifications title", () => {
     render(<Notifications />);
-    const titleElement = screen.getByText(/Here is the list of notifications/i);
-    expect(titleElement).toBeInTheDocument();
+    const titleElement = screen.getByText(/Here is the list of notifications/i); // نبحث عن النص مع تجاهل حالة الأحرف
+    expect(titleElement).toBeInTheDocument(); // نتأكد أنه موجود في الـ DOM
   });
 
-  test('renders the close button', () => {
+  // 2. اختبار وجود الزر (button element)
+  test("should have a close button", () => {
     render(<Notifications />);
-    const closeButton = screen.getByRole('button', { name: /close/i });
-    expect(closeButton).toBeInTheDocument();
+    const buttonElement = screen.getByRole("button", { name: /close/i }); // ابحث عن الزر باستخدام aria-label
+    expect(buttonElement).toBeInTheDocument(); // تأكد من وجود الزر
   });
 
-  test('renders three list items', () => {
+  // 3. اختبار وجود 3 عناصر li
+  test("should render 3 list items", () => {
     render(<Notifications />);
-    const listItems = screen.getAllByRole('listitem');
-    expect(listItems).toHaveLength(3);
+    const listItems = screen.getAllByRole("listitem"); // ابحث عن العناصر li
+    expect(listItems.length).toBe(3); // تحقق من وجود 3 عناصر
   });
 
-  test('logs message when close button is clicked', () => {
+  // 4. اختبار الضغط على الزر
+  test('should log "Close button has been clicked" when close button is clicked', () => {
+    // ننشئ دالة وهمية لمراقبة الكونسول
+    const consoleSpy = jest.spyOn(console, "log").mockImplementation();
+
     render(<Notifications />);
-    const consoleLog = jest.spyOn(console, 'log').mockImplementation();
-    const closeButton = screen.getByRole('button', { name: /close/i });
-    fireEvent.click(closeButton);
-    expect(consoleLog).toHaveBeenCalledWith(expect.stringMatching(/Close button has been clicked/i));
+    const buttonElement = screen.getByRole("button", { name: /close/i }); // نبحث عن الزر باستخدام aria-label
+    fireEvent.click(buttonElement); // نحاكي ضغط الزر
+
+    expect(consoleSpy).toHaveBeenCalledWith("Close button has been clicked"); // نتأكد أن الرسالة تم تسجيلها في الكونسول
+
+    consoleSpy.mockRestore(); // استعادة الكونسول بعد الاختبار
   });
 });

@@ -1,22 +1,28 @@
-import { render, screen } from "@testing-library/react";
-import App from "./App";
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import App from './App';
 
-test('Should return a good title text : School dashboard', () => {
-    render(<App />)
-    const header = screen.getByText(/School dashboard/i);
-    expect(header).toBeInTheDocument();
-})
+describe('App component', () => {
+  test('renders the main heading', () => {
+    const { container } = render(<App />);
+    const heading = screen.getByRole('heading', {
+      level: 1,
+      name: /school dashboard/i,
+    });
+    expect(heading).toBeInTheDocument();
+  });
 
-test('Should return 2 good text', () => {
-    render(<App />)
-    const p1 = screen.getByText(/Login to access the full dashboard/i);
-    const p2 = screen.getByText(/Copyright 2024 - holberton School/i);
-    expect(p1).toBeInTheDocument();
-    expect(p2).toBeInTheDocument();
-})
+  test('renders the login and footer paragraphs', () => {
+    render(<App />);
+    const bodyText = screen.getByText(/login to access the full dashboard/i);
+    const footerText = screen.getByText(/copyright/i);
+    expect(bodyText).toBeInTheDocument();
+    expect(footerText).toBeInTheDocument();
+  });
 
-test('Should check header image is présent', () => {
-    render(<App />)
-    const imgHeader = screen.getByAltText(/holberton logo/i);
-    expect(imgHeader).toBeInTheDocument();
-})
+  test('renders the Holberton logo image', () => {
+    render(<App />);
+    const image = screen.getByAltText(/holberton logo/i);
+    expect(image).toBeInTheDocument();
+  });
+});

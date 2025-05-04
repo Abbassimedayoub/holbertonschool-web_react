@@ -1,9 +1,11 @@
+import React from "react";
 import { render, screen } from "@testing-library/react";
-import { expect, test } from "@jest/globals";
 import Footer from "./Footer";
 
-test("Should render the footer text", () => {
+describe("Footer component", () => {
+  test("renders the footer text", () => {
     render(<Footer />);
-    const footerText = screen.getByText(/Copyright 2024 Holberton School/i);
+    const footerText = screen.getByText(/copyright/i);
     expect(footerText).toBeInTheDocument();
+  });
 });

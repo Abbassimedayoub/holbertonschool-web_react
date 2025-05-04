@@ -1,15 +1,20 @@
+import React from "react";
 import { render, screen } from "@testing-library/react";
-import { expect, test } from "@jest/globals";
 import Header from "./Header";
 
-test("Should display the Holberton logo", () => {
+describe("Header component", () => {
+  test("renders Holberton logo", () => {
     render(<Header />);
-    const imgHeader = screen.getByAltText(/holberton logo/i);
-    expect(imgHeader).toBeInTheDocument();
-});
+    const logo = screen.getByAltText(/holberton logo/i);
+    expect(logo).toBeInTheDocument();
+  });
 
-test("Should display the heading with the correct text", () => {
+  test("renders h1 element with correct text", () => {
     render(<Header />);
-    const heading = screen.getByRole("heading", { level: 1, name: /School dashboard/i });
+    const heading = screen.getByRole("heading", {
+      level: 1,
+      name: /school dashboard/i,
+    });
     expect(heading).toBeInTheDocument();
+  });
 });

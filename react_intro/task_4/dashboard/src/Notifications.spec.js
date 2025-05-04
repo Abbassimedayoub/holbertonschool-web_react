@@ -1,31 +1,31 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import { expect, test, describe, jest } from '@jest/globals';
-import Notifications from './Notifications';
+import React from "react";
+import { render, screen, fireEvent } from "@testing-library/react";
+import Notifications from "./Notifications";
 
-describe('Notifications Component', () => {
-  test('renders the notifications title', () => {
+describe("Notifications component", () => {
+  test("renders the notifications title", () => {
     render(<Notifications />);
-    const titleElement = screen.getByText(/Here is the list of notifications/i);
+    const titleElement = screen.getByText(/here is the list of notifications/i);
     expect(titleElement).toBeInTheDocument();
   });
 
-  test('renders the close button', () => {
+  test("renders the close button", () => {
     render(<Notifications />);
-    const closeButton = screen.getByRole('button', { name: /close/i });
-    expect(closeButton).toBeInTheDocument();
+    const buttonElement = screen.getByRole("button", { name: /close/i });
+    expect(buttonElement).toBeInTheDocument();
   });
 
-  test('renders three list items', () => {
+  test("renders 3 list items", () => {
     render(<Notifications />);
-    const listItems = screen.getAllByRole('listitem');
+    const listItems = screen.getAllByRole("listitem");
     expect(listItems).toHaveLength(3);
   });
 
-  test('logs message when close button is clicked', () => {
+  test("clicking the close button logs to the console", () => {
+    console.log = jest.fn(); // Mock console.log
     render(<Notifications />);
-    const consoleLog = jest.spyOn(console, 'log').mockImplementation();
-    const closeButton = screen.getByRole('button', { name: /close/i });
-    fireEvent.click(closeButton);
-    expect(consoleLog).toHaveBeenCalledWith(expect.stringMatching(/Close button has been clicked/i));
+    const button = screen.getByRole("button", { name: /close/i });
+    fireEvent.click(button);
+    expect(console.log).toHaveBeenCalledWith("Close button has been clicked");
   });
 });

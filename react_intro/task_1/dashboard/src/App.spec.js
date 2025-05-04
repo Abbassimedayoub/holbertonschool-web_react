@@ -1,23 +1,33 @@
-import { render, screen } from "@testing-library/react";
-import { expect, test } from '@jest/globals';
-import App from "./App";
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import App from './App';
 
-test('Should return a good title text : School dashboard', () => {
-  render(<App />)
-  const header = screen.getByText(/School dashboard/i);
-  expect(header).toBeInTheDocument();
-})
+describe('App component', () => {
+  test('renders h1 with text School dashboard', () => {
+    render(<App />);
+    const heading = screen.getByRole('heading', { name: /School Dashboard/i });
+    expect(heading).toBeInTheDocument();
+  });
 
-test('Should return 2 good text', () => {
-  render(<App />)
-  const p1 = screen.getByText(/Login to access the full dashboard/i);
-  const p2 = screen.getByText(/Copyright 2024 - holberton School/i);
-  expect(p1).toBeInTheDocument();
-  expect(p2).toBeInTheDocument();
-})
+  test('renders correct text in body and footer', () => {
+    render(<App />);
 
-test('Should check header image is présent', () => {
-  render(<App />)
-  const imgHeader = screen.getByAltText(/holberton logo/i);
-  expect(imgHeader).toBeInTheDocument();
-})
+    // Paragraph in App-body
+    const bodyText = screen.getByText(/Login to access the full dashboard/i);
+    expect(bodyText).toBeInTheDocument();
+
+    // Paragraph in App-footer
+    const currentYear = new Date().getFullYear();
+    const footerText = screen.getByText(
+      `Copyright ${currentYear} - holberton School`
+    );
+
+    expect(footerText).toBeInTheDocument();
+  });
+
+  test('renders the logo image', () => {
+    render(<App />);
+    const image = screen.getByAltText(/holberton logo/i);
+    expect(image).toBeInTheDocument();
+  });
+});

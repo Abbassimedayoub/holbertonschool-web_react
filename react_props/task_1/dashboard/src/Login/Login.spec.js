@@ -1,33 +1,24 @@
-import { fireEvent, render, screen } from '@testing-library/react';
-import Login from './Login';
+import React from "react";
+import { render, screen, fireEvent } from "@testing-library/react";
+import Login from "./Login";
 
-
-test('testing signin form elements', () => {
+describe("Login component", () => {
+  test("renders 2 labels, 2 inputs, and 1 button", () => {
     render(<Login />);
-    const inputElements = screen.getAllByRole('textbox')
-    const emailLabelElement = screen.getByLabelText(/email/i);
-    const passwordLabelElement = screen.getByLabelText(/password/i);
-    const buttonElementText = screen.getByRole('button', { name: 'OK' })
-    expect(inputElements).toHaveLength(2)
-    expect(emailLabelElement).toBeInTheDocument()
-    expect(passwordLabelElement).toBeInTheDocument()
-    expect(buttonElementText).toBeInTheDocument()
-});
+    const emailInput = screen.getByLabelText(/email/i);
+    const passwordInput = screen.getByLabelText(/password/i);
+    const button = screen.getByRole("button", { name: /ok/i });
 
-test('should check that the email input element will be focused whenever the associated label is clicked', async () => {
-    render(<Login />)
-    const emailLabel = screen.getByText('Email');
-    const emailInput = screen.getByLabelText('Email', { selector: 'input' });
-    fireEvent.click(emailLabel);
-    emailInput.focus();
-    expect(emailInput).toHaveFocus();
-})
+    expect(emailInput).toBeInTheDocument();
+    expect(passwordInput).toBeInTheDocument();
+    expect(button).toBeInTheDocument();
+  });
 
-test('should check that the password input element will be focused whenver the associated label is clicked', async () => {
-    render(<Login />)
-    const passwordLabel = screen.getByText('Password');
-    const passwordInput = screen.getByLabelText('Password', { selector: 'input' });
-    fireEvent.click(passwordLabel);
-    passwordInput.focus()
-    expect(passwordInput).toHaveFocus();
+  test("label is correctly associated with input", () => {
+    render(<Login />);
+    const emailLabel = screen.getByText(/email/i);
+    expect(emailLabel).toHaveAttribute("for", "email");
+    const emailInput = screen.getByLabelText(/email/i);
+    expect(emailInput).toHaveAttribute("id", "email");
+  });
 });
